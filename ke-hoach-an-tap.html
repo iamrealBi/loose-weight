@@ -1,0 +1,915 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Kế hoạch ăn 7 ngày và lịch tập HIT 5 buổi mỗi tuần, tối đa 45 phút, dành cho mục tiêu tăng cơ giảm mỡ.">
+  <title>Kế hoạch ăn và tập HIT 45 phút</title>
+  <style>
+    :root {
+      --ink: #17211b;
+      --muted: #607067;
+      --paper: #f5f7f2;
+      --card: #ffffff;
+      --green: #176b43;
+      --green-2: #dff2e7;
+      --lime: #b9df5a;
+      --amber: #f5b849;
+      --amber-soft: #fff2d8;
+      --red: #a53d38;
+      --red-soft: #fde9e7;
+      --line: #dbe3dc;
+      --shadow: 0 12px 36px rgba(24, 55, 36, .08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 95% 0%, rgba(185, 223, 90, .22), transparent 28rem),
+        linear-gradient(180deg, #f8faf5 0%, var(--paper) 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    a { color: var(--green); }
+    button { font: inherit; }
+
+    .page {
+      width: min(1160px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 72px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 42px;
+      color: #fff;
+      background: linear-gradient(135deg, #123e2b 0%, #176b43 62%, #2f8b55 100%);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      right: -90px;
+      top: -120px;
+      border-radius: 50%;
+      background: rgba(185, 223, 90, .2);
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: #d7f49a;
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4.2rem);
+      line-height: 1.02;
+      letter-spacing: -.045em;
+    }
+
+    .subtitle {
+      max-width: 720px;
+      margin: 18px 0 0;
+      color: rgba(255,255,255,.84);
+      font-size: 1.05rem;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .stat {
+      padding: 15px 16px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 14px;
+      backdrop-filter: blur(8px);
+    }
+
+    .stat strong { display: block; font-size: 1.22rem; }
+    .stat span { color: rgba(255,255,255,.7); font-size: .86rem; }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin: 18px 0 26px;
+      padding: 10px;
+      overflow-x: auto;
+      background: rgba(245,247,242,.88);
+      border: 1px solid rgba(219,227,220,.9);
+      border-radius: 14px;
+      backdrop-filter: blur(14px);
+    }
+
+    .toolbar a, .toolbar button {
+      flex: 0 0 auto;
+      padding: 8px 12px;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .toolbar a:hover, .toolbar button:hover { border-color: var(--green); }
+    .toolbar .print { margin-left: auto; color: #fff; background: var(--green); border-color: var(--green); }
+
+    section { margin-top: 32px; scroll-margin-top: 82px; }
+    h2 { margin: 0 0 16px; font-size: clamp(1.45rem, 3vw, 2rem); letter-spacing: -.025em; }
+    h3 { margin: 0; font-size: 1.18rem; }
+    p { margin: 0 0 12px; }
+
+    .callout {
+      padding: 18px 20px;
+      background: var(--amber-soft);
+      border: 1px solid #f3d594;
+      border-left: 5px solid var(--amber);
+      border-radius: 14px;
+    }
+
+    .callout strong { color: #784f00; }
+    .callout.danger { background: var(--red-soft); border-color: #efc5c1; border-left-color: var(--red); }
+    .callout.danger strong { color: var(--red); }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .card { padding: 22px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .time-block { padding: 14px; background: #f7faf7; border: 1px solid var(--line); border-radius: 12px; }
+    .time-block strong { display: block; color: var(--green); font-size: 1.05rem; }
+    .time-block span { color: var(--muted); font-size: .88rem; }
+
+    .week {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .day {
+      min-height: 148px;
+      padding: 15px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(24, 55, 36, .05);
+    }
+
+    .day .num { color: var(--muted); font-size: .8rem; font-weight: 800; text-transform: uppercase; }
+    .day strong { display: block; margin: 8px 0 5px; }
+    .day p { color: var(--muted); font-size: .88rem; }
+    .day.rest { background: #eef1ed; box-shadow: none; }
+    .day.active { border-top: 5px solid var(--green); }
+
+    .rules { margin: 0; padding-left: 1.25rem; }
+    .rules li + li { margin-top: 8px; }
+
+    .workout {
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .workout-head {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 21px 24px;
+      background: linear-gradient(90deg, var(--green-2), #f6fbf7);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .workout-head p { margin: 4px 0 0; color: var(--muted); }
+    .badge { flex: 0 0 auto; padding: 7px 11px; color: var(--green); background: #fff; border: 1px solid #b9d9c5; border-radius: 999px; font-size: .82rem; font-weight: 800; }
+    .table-wrap { overflow-x: auto; }
+
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 13px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+    th { color: var(--muted); background: #fafcf9; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; }
+    tr:last-child td { border-bottom: 0; }
+    td:first-child { font-weight: 800; }
+    .sets { white-space: nowrap; color: var(--green); font-weight: 900; }
+    .machine { color: #245d40; }
+    .free { color: #6c5020; }
+
+    .cues {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      padding: 16px;
+      background: #fbfcfa;
+      border-top: 1px solid var(--line);
+    }
+
+    .cue { padding: 12px 13px; background: #fff; border: 1px solid var(--line); border-radius: 11px; font-size: .9rem; }
+    .cue strong { display: block; margin-bottom: 3px; color: var(--green); }
+
+    .progression {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      counter-reset: step;
+    }
+
+    .step { position: relative; padding: 50px 18px 18px; background: #fff; border: 1px solid var(--line); border-radius: 15px; }
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      top: 14px;
+      left: 18px;
+      display: grid;
+      width: 28px;
+      height: 28px;
+      place-items: center;
+      color: #fff;
+      background: var(--green);
+      border-radius: 50%;
+      font-weight: 900;
+    }
+
+    .step strong { display: block; margin-bottom: 5px; }
+    .meal-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .meal-day { overflow: hidden; background: #fff; border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); }
+    .meal-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 18px; background: linear-gradient(90deg, #fff2d8, #fffaf0); border-bottom: 1px solid #f3dfba; }
+    .meal-head h3 { color: #654500; }
+    .meal-head span { color: #755715; font-size: .8rem; font-weight: 800; }
+    .meal-list { list-style: none; margin: 0; padding: 8px 18px 16px; }
+    .meal-list li { display: grid; grid-template-columns: 78px 1fr; gap: 10px; padding: 10px 0; border-bottom: 1px dashed var(--line); }
+    .meal-list li:last-child { border-bottom: 0; }
+    .meal-list strong { color: var(--green); }
+    .shop-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .shop-card { padding: 18px; background: #fff; border: 1px solid var(--line); border-radius: 14px; }
+    .shop-card h3 { margin-bottom: 10px; color: var(--green); }
+    .shop-card ul { margin: 0; padding-left: 1.1rem; }
+    .shop-card li + li { margin-top: 5px; }
+    .checklist { margin: 0; padding: 0; list-style: none; }
+    .checklist li { position: relative; padding: 8px 0 8px 30px; border-bottom: 1px solid var(--line); }
+    .checklist li:last-child { border-bottom: 0; }
+    .checklist li::before { content: "□"; position: absolute; left: 0; top: 6px; color: var(--green); font-size: 1.25rem; font-weight: 900; }
+    .guide-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .guide { padding: 18px; background: #fff; border: 1px solid var(--line); border-radius: 15px; }
+    .guide h3 { margin-bottom: 8px; color: var(--green); }
+    .guide p:last-child { margin-bottom: 0; }
+    .definition { display: grid; grid-template-columns: 92px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+    .definition:last-child { border-bottom: 0; }
+    .definition strong { color: var(--green); }
+    details { background: #fff; border: 1px solid var(--line); border-radius: 14px; }
+    details + details { margin-top: 10px; }
+    summary { padding: 15px 18px; color: var(--green); font-weight: 850; cursor: pointer; }
+    details > div { padding: 0 18px 17px; }
+    .mini-table td:first-child { width: 24%; }
+    .decision { padding: 16px 18px; background: #f7faf7; border: 1px solid var(--line); border-radius: 13px; }
+    .decision strong { color: var(--green); }
+    .log-table input { width: 100%; min-width: 74px; padding: 7px; border: 1px solid var(--line); border-radius: 7px; font: inherit; }
+    .top-link { display: inline-block; margin-top: 12px; font-size: .85rem; }
+    .muted { color: var(--muted); }
+    .small { font-size: .88rem; }
+
+    .sources { padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: .86rem; }
+    footer { margin-top: 44px; color: var(--muted); text-align: center; font-size: .82rem; }
+
+    @media (max-width: 900px) {
+      .hero-stats, .timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .week { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .week .day:last-child { grid-column: span 2; }
+      .cues, .progression, .shop-grid, .guide-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .page { width: min(100% - 20px, 1160px); padding-top: 10px; }
+      .hero { padding: 28px 22px; border-radius: 20px; }
+      .hero-stats, .timeline, .grid-2, .week, .meal-grid { grid-template-columns: 1fr; }
+      .week .day:last-child { grid-column: auto; }
+      .toolbar .print { margin-left: 0; }
+      .workout-head { align-items: flex-start; }
+      th, td { padding: 11px 10px; }
+    }
+
+    @media print {
+      @page { size: A4; margin: 11mm; }
+      body { background: #fff; font-size: 10pt; }
+      .page { width: 100%; padding: 0; }
+      .hero { padding: 24px; box-shadow: none; break-after: avoid; }
+      .toolbar { display: none; }
+      .card, .workout { box-shadow: none; }
+      section { margin-top: 22px; }
+      .workout { break-inside: avoid; }
+      .week { grid-template-columns: repeat(7, 1fr); }
+      .day { min-height: 108px; padding: 10px; box-shadow: none; }
+      .cues { grid-template-columns: repeat(3, 1fr); }
+      .meal-grid { grid-template-columns: 1fr; }
+      .meal-day { break-inside: avoid; box-shadow: none; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">Kế hoạch cá nhân hóa · Ăn và tập</p>
+      <h1>Tăng cơ · giảm mỡ<br>mỗi ngày một kế hoạch rõ ràng</h1>
+      <p class="subtitle">Thực đơn 7 ngày giàu đạm kết hợp lịch HIT 5 buổi, tối đa 45 phút. Mỗi bài đều có phương án máy và tạ tự do để áp dụng ngay cả khi phòng gym đông.</p>
+      <div class="hero-stats" aria-label="Tóm tắt kế hoạch">
+        <div class="stat"><strong>7 ngày ăn</strong><span>4 bữa mỗi ngày</span></div>
+        <div class="stat"><strong>5 buổi HIT</strong><span>mỗi tuần</span></div>
+        <div class="stat"><strong>≤ 45 phút</strong><span>mỗi buổi</span></div>
+        <div class="stat"><strong>T5 + CN</strong><span>nghỉ hoàn toàn</span></div>
+      </div>
+    </header>
+
+    <nav class="toolbar" aria-label="Điều hướng">
+      <a href="#tong-quan">Tổng quan</a>
+      <a href="#lich-an">Lịch ăn</a>
+      <a href="#mua-sam">Mua sắm</a>
+      <a href="#dinh-duong">Cách áp dụng</a>
+      <a href="#hit">Vì sao HIT?</a>
+      <a href="#lich-tuan">Lịch tập</a>
+      <a href="#bai-tap">Bài tập</a>
+      <a href="#chon-ta">Chọn tạ</a>
+      <a href="#ky-thuat">Kỹ thuật</a>
+      <a href="#theo-doi">Theo dõi</a>
+      <a href="#an-toan">An toàn</a>
+      <button class="print" type="button" onclick="window.print()">In / lưu PDF</button>
+    </nav>
+
+    <section id="tong-quan">
+      <div class="callout">
+        <strong>Phân biệt:</strong> HIT trong kế hoạch này là <em>High-Intensity Training</em> theo tinh thần Arthur Jones, không phải HIIT cardio. Vì tập 5 buổi/tuần, đây là HIT điều chỉnh: volume thấp, hiệp tập chất lượng cao nhưng không thất bại tuyệt đối ở mọi bài.
+      </div>
+
+      <div class="grid-2" style="margin-top:18px">
+        <article class="card">
+          <h2>Khung 45 phút</h2>
+          <div class="timeline">
+            <div class="time-block"><strong>0–6′</strong><span>Khởi động</span></div>
+            <div class="time-block"><strong>6–35′</strong><span>5–6 bài tạ</span></div>
+            <div class="time-block"><strong>35–40′</strong><span>Cô lập / core</span></div>
+            <div class="time-block"><strong>40–45′</strong><span>Cardio nhẹ</span></div>
+          </div>
+        </article>
+        <article class="card">
+          <h2>Quy tắc HIT</h2>
+          <ul class="rules">
+            <li>Tuần 1–2: mỗi bài chỉ <strong>1 hiệp làm việc</strong>; bài đầu mỗi nhóm cơ có thể 2 hiệp.</li>
+            <li>Từ tuần 3: dùng số hiệp trong bảng nếu hồi phục tốt.</li>
+            <li>4 tuần đầu: dừng ở <strong>RIR 1–2</strong>; chưa cần thất bại hoàn toàn.</li>
+            <li>Sau đó, tối đa 1–2 bài máy an toàn mỗi buổi mới có thể đến <strong>technical failure</strong>.</li>
+            <li>Bench tạ đòn, box squat và RDL luôn giữ <strong>RIR 1–2</strong>.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="lich-an">
+      <h2>Lịch ăn 7 ngày</h2>
+      <div class="callout">
+        <strong>Cách dùng:</strong> đây là khẩu phần theo kế hoạch giảm mỡ nhưng giữ cơ, khoảng 2.200–2.400 kcal/ngày và 160–180 g đạm. Cơm và khoai là khối lượng phần ăn; rau cân trước khi nấu. Dầu ăn phải cân riêng, không rót trực tiếp.
+      </div>
+
+      <div class="meal-grid" style="margin-top:18px">
+        <article class="meal-day">
+          <header class="meal-head"><h3>Thứ 2 · Push</h3><span>Ngày gym</span></header>
+          <ul class="meal-list">
+            <li><strong>Sáng</strong><span>Yến mạch 60 g + sữa ít béo 250 ml + whey 30 g + 2 trứng + chuối 100 g</span></li>
+            <li><strong>Trưa</strong><span>Cơm 200 g + bò nạc 180 g + rau 300 g + dầu 10 g</span></li>
+            <li><strong>Phụ</strong><span>Sữa chua không đường 200 g + ổi/táo 200 g</span></li>
+            <li><strong>Tối</strong><span>Khoai 200 g + ức gà 200 g + rau 300 g + dầu 5 g</span></li>
+          </ul>
+        </article>
+
+        <article class="meal-day">
+          <header class="meal-head"><h3>Thứ 3 · Pull</h3><span>Ngày gym</span></header>
+          <ul class="meal-list">
+            <li><strong>Sáng</strong><span>Khoai 200 g + 3 trứng + rau 200 g + chuối 100 g</span></li>
+            <li><strong>Trưa</strong><span>Cơm 200 g + heo nạc 190 g + rau 300 g + dầu 10 g</span></li>
+            <li><strong>Phụ</strong><span>Sữa chua không đường 200 g + trái cây 200 g + whey 30 g</span></li>
+            <li><strong>Tối</strong><span>Cơm 150 g + cá 200 g + rau 300 g + dầu 5 g</span></li>
+          </ul>
+        </article>
+
+        <article class="meal-day">
+          <header class="meal-head"><h3>Thứ 4 · Legs A</h3><span>Ngày gym</span></header>
+          <ul class="meal-list">
+            <li><strong>Sáng</strong><span>Yến mạch 60 g + whey 30 g + 2 trứng + chuối 100 g</span></li>
+            <li><strong>Trưa</strong><span>Cơm 200 g + cá 250 g + rau 300 g + dầu 10 g</span></li>
+            <li><strong>Phụ</strong><span>Sữa chua không đường 200 g + trái cây 200 g</span></li>
+            <li><strong>Tối</strong><span>Khoai 200 g + tôm 150 g + đậu hũ 150 g + rau 300 g + dầu 5 g</span></li>
+          </ul>
+        </article>
+
+        <article class="meal-day">
+          <header class="meal-head"><h3>Thứ 5 · Nghỉ</h3><span>Phục hồi</span></header>
+          <ul class="meal-list">
+            <li><strong>Sáng</strong><span>3 lát bánh mì nguyên cám + 3 trứng + cá ngừ 100 g + sữa 250 ml + rau 200 g</span></li>
+            <li><strong>Trưa</strong><span>Cơm 200 g + ức gà 200 g + rau 300 g + dầu 10 g</span></li>
+            <li><strong>Phụ</strong><span>Sữa chua không đường 200 g + trái cây 200 g + chuối 100 g</span></li>
+            <li><strong>Tối</strong><span>Khoai 200 g + heo nạc 180 g + rau 300 g + dầu 5 g</span></li>
+          </ul>
+        </article>
+
+        <article class="meal-day">
+          <header class="meal-head"><h3>Thứ 6 · Upper</h3><span>Ngày gym</span></header>
+          <ul class="meal-list">
+            <li><strong>Sáng</strong><span>Yến mạch 60 g + sữa ít béo 250 ml + whey 30 g + 3 trứng + chuối 100 g</span></li>
+            <li><strong>Trưa</strong><span>Cơm 200 g + bò nạc 170 g + rau 300 g + dầu 10 g</span></li>
+            <li><strong>Phụ</strong><span>Sữa chua không đường 200 g + trái cây 200 g</span></li>
+            <li><strong>Tối</strong><span>Khoai 200 g + ức gà 200 g + rau 300 g + dầu 5 g</span></li>
+          </ul>
+        </article>
+
+        <article class="meal-day">
+          <header class="meal-head"><h3>Thứ 7 · Legs B</h3><span>≈ 2.355 kcal · 175 g đạm</span></header>
+          <ul class="meal-list">
+            <li><strong>Sáng</strong><span>3 lát bánh mì nguyên cám + 2 trứng + cá ngừ 100 g + sữa 250 ml</span></li>
+            <li><strong>Trưa</strong><span>Cơm 200 g + cá basa 250 g + rau 300 g + dầu 10 g</span></li>
+            <li><strong>Phụ</strong><span>Sữa chua không đường 200 g + ổi 200 g</span></li>
+            <li><strong>Tối</strong><span>Cơm 150 g + heo nạc 180 g + rau 300 g + dầu 5 g</span></li>
+          </ul>
+        </article>
+
+        <article class="meal-day">
+          <header class="meal-head"><h3>Chủ nhật · Nghỉ</h3><span>≈ 2.205 kcal · 161 g đạm</span></header>
+          <ul class="meal-list">
+            <li><strong>Sáng</strong><span>Cơm 200 g + 3 trứng + rau 200 g</span></li>
+            <li><strong>Trưa</strong><span>Cơm 200 g + tôm 200 g + đậu hũ 200 g + rau 300 g + dầu 10 g</span></li>
+            <li><strong>Phụ</strong><span>Sữa chua không đường 200 g + trái cây 200 g + 1 quả chuối</span></li>
+            <li><strong>Tối</strong><span>Cơm 150 g + ức gà 200 g + rau 300 g + dầu 5 g</span></li>
+          </ul>
+        </article>
+
+        <article class="meal-day">
+          <header class="meal-head"><h3>Quy tắc bữa phụ</h3><span>Khoảng 15:30–16:00</span></header>
+          <ul class="meal-list">
+            <li><strong>Khi đói</strong><span>Ăn bữa phụ đúng lịch; không cần cố nhịn để “ép đốt mỡ”.</span></li>
+            <li><strong>Vẫn đói</strong><span>Chuyển 100–150 kcal từ bữa tối sang bữa phụ, không cộng thêm vào tổng ngày.</span></li>
+            <li><strong>Ưu tiên</strong><span>Sữa chua, trái cây nguyên quả, trứng hoặc phần đạm nạc; uống nước và ăn chậm.</span></li>
+            <li><strong>Theo dõi</strong><span>Nếu đói mạnh lặp lại 5–7 ngày, điều chỉnh phân bố bữa thay vì chỉ cố chịu.</span></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="mua-sam">
+      <h2>Danh sách mua cho một tuần</h2>
+      <div class="shop-grid">
+        <article class="shop-card">
+          <h3>Đạm</h3>
+          <ul>
+            <li>Ức gà: 800 g</li><li>Heo nạc: 550 g</li><li>Bò nạc: 350 g</li>
+            <li>Các loại cá: 700 g</li><li>Tôm: 350 g</li><li>Cá ngừ hộp: 200 g</li>
+            <li>Đậu hũ: 350–400 g</li><li>Trứng: 17–18 quả</li><li>Whey: 120 g</li>
+          </ul>
+        </article>
+        <article class="shop-card">
+          <h3>Tinh bột & sữa</h3>
+          <ul>
+            <li>Gạo: khoảng 800 g gạo khô</li><li>Khoai: khoảng 1 kg</li><li>Yến mạch: 180 g</li>
+            <li>Bánh mì nguyên cám: 6 lát lớn</li><li>Sữa chua: 1,4 kg</li><li>Sữa ít béo: 1 lít</li>
+          </ul>
+        </article>
+        <article class="shop-card">
+          <h3>Rau, quả & dầu</h3>
+          <ul>
+            <li>Rau: 4,8–5 kg</li><li>Trái cây: khoảng 2 kg</li><li>Dầu ăn: khoảng 100 g</li>
+            <li>Tổng thực phẩm: khoảng 16–17 kg/tuần</li><li>Nên mua 2 lần: Chủ nhật và Thứ 5</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="grid-2" style="margin-top:16px">
+        <article class="card">
+          <h3>Chủ nhật · mua cho T2–T5</h3>
+          <p class="muted" style="margin-top:8px">Khoảng 8–8,5 kg: 1,9 kg thực phẩm giàu đạm, 10 trứng, 2,7–2,8 kg rau, 1,1 kg trái cây, 800 g sữa chua, 500 ml sữa và 600 g khoai.</p>
+        </article>
+        <article class="card">
+          <h3>Thứ 5 · mua cho T6–CN</h3>
+          <p class="muted" style="margin-top:8px">Khoảng 6–7 kg: 1,4 kg thực phẩm giàu đạm, 8 trứng, 2–2,2 kg rau, 900 g trái cây, 600 g sữa chua, 500 ml sữa và 400 g khoai.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="dinh-duong">
+      <h2>Cách áp dụng lịch ăn</h2>
+      <div class="guide-grid">
+        <article class="guide">
+          <h3>Quy ước cân</h3>
+          <p><strong>Cơm:</strong> cân sau khi nấu. <strong>Rau:</strong> cân trước khi nấu. Với thịt, cá, tôm và đậu hũ, hãy dùng nhất quán một cách cân; danh sách mua phía trên được cộng trực tiếp từ định lượng trong thực đơn.</p>
+          <p class="muted small">Calo thực tế thay đổi theo phần nạc/mỡ, nhãn sữa chua, loại cá và lượng nước sau nấu. Vì vậy hãy theo dõi cân nặng rồi điều chỉnh, không coi con số ước tính là tuyệt đối.</p>
+        </article>
+        <article class="guide">
+          <h3>Giờ ăn gợi ý</h3>
+          <p>Sau tập sáng ăn bữa sáng; bữa trưa theo giờ làm việc; bữa phụ khoảng <strong>15:30–16:00</strong>; bữa tối cách giờ ngủ đủ để tiêu hóa dễ chịu.</p>
+          <p class="muted small">Không cần nhịn bữa phụ. Bữa phụ được đặt đúng lúc bạn thường bắt đầu đói sau bữa trưa.</p>
+        </article>
+        <article class="guide">
+          <h3>Nước và gia vị</h3>
+          <p>Dùng tiêu, tỏi, gừng, chanh và nước mắm vừa phải. Hạn chế mayonnaise, sốt đường và đồ chiên. Cân dầu bằng cân điện tử hoặc thìa định lượng.</p>
+          <p class="muted small">Uống nước đều trong ngày; nước không thay được bữa ăn khi đang đói thực sự.</p>
+        </article>
+      </div>
+
+      <div class="grid-2" style="margin-top:16px">
+        <article class="card">
+          <h3>Chuẩn bị hai lần mỗi tuần</h3>
+          <ol class="rules" style="margin-top:10px">
+            <li>Chia thịt/cá thành túi dẹt 180–250 g rồi cấp đông; không giữ nguyên khay siêu thị.</li>
+            <li>Chia cơm chín thành phần 150 g hoặc 200 g.</li>
+            <li>Chia rau theo túi 300 g; rau lá chỉ mua đủ 3–4 ngày.</li>
+            <li>Luộc, hấp, áp chảo chống dính hoặc dùng nồi chiên; cân riêng lượng dầu.</li>
+            <li>Chuyển khẩu phần ngày hôm sau xuống ngăn mát để rã đông an toàn.</li>
+          </ol>
+        </article>
+        <article class="card">
+          <h3>Cách xếp để không chật tủ</h3>
+          <ul class="rules" style="margin-top:10px">
+            <li>Không đóng hộp toàn bộ bảy ngày cùng lúc; hộp cơm chín chiếm nhiều chỗ hơn túi nguyên liệu.</li>
+            <li>Gạo, yến mạch, whey, dầu và khoai để nơi khô thoáng, không cần cho vào tủ.</li>
+            <li>Chuối, cam, táo hoặc ổi chưa chín có thể để ngoài.</li>
+            <li>Sữa tiệt trùng hộp nhỏ có thể để ngoài trước khi mở.</li>
+            <li>Chia hai lần mua giúp tủ thường chỉ phải chứa khoảng 5–7 kg thực phẩm cùng phần thịt cá trong ngăn đông.</li>
+          </ul>
+        </article>
+      </div>
+
+      <h2 style="margin-top:28px">Đói buổi chiều: hiểu và xử lý đúng</h2>
+      <div class="callout">
+        <strong>Đói vào khoảng 15:30–16:00 sau bữa trưa vài giờ là bình thường</strong>, nhất là trong 1–2 tuần đầu chuyển sang mức calo thấp hơn. Hãy ăn bữa phụ theo lịch; không cần cố chịu đói để chứng minh chế độ đang hiệu quả.
+      </div>
+      <div class="guide-grid" style="margin-top:16px">
+        <article class="guide">
+          <h3>Đói có phải đang đốt mỡ?</h3>
+          <p><strong>Không.</strong> Cảm giác đói không chứng minh cơ thể đang buộc phải dùng mỡ. Giảm mỡ đến từ thâm hụt năng lượng tích lũy qua nhiều ngày và tuần.</p>
+        </article>
+        <article class="guide">
+          <h3>Cơ thể có quen không?</h3>
+          <p>Có thể quen một phần sau 1–2 tuần khi giờ ăn ổn định, nhưng không nhất thiết hết đói hoàn toàn. Ngủ ít—đặc biệt khoảng 5 giờ—có thể làm đói và thèm ăn mạnh hơn.</p>
+        </article>
+        <article class="guide">
+          <h3>Làm ngay khi đói</h3>
+          <p>Uống một cốc nước, ăn đúng bữa phụ, ăn chậm 10–15 phút và chờ khoảng 20 phút trước khi đánh giá lại. Tránh dùng bánh kẹo hoặc nước ngọt để cắt đói.</p>
+        </article>
+      </div>
+      <div class="decision" style="margin-top:14px">
+        <strong>Nếu vẫn đói mạnh trong 5–7 ngày:</strong> chuyển 100–150 kcal từ bữa tối sang bữa phụ—ví dụ một quả trứng, 100–150 g sữa chua Hy Lạp, 80–100 g ức gà hoặc 15–20 g whey. Đây là <em>di chuyển</em> calo, không cộng thêm vào tổng ngày.
+      </div>
+    </section>
+
+    <section id="hit">
+      <h2>Vì sao HIT có thể hiệu quả?</h2>
+      <div class="callout">
+        <strong>HIT ở đây là High-Intensity Training kiểu Arthur Jones, không phải HIIT cardio.</strong> Điểm mạnh thật sự của nó là tạo kích thích tập luyện đáng kể trong thời gian ngắn, không phải khả năng “thần tốc” hay tập kiệt sức bằng mọi giá.
+      </div>
+      <div class="guide-grid" style="margin-top:16px">
+        <article class="guide"><h3>Sức căng cơ học</h3><p>Một hiệp đủ nặng, biên độ đầy đủ và tiến gần giới hạn kỹ thuật tạo sức căng lên cơ—kích thích quan trọng cho tăng cơ.</p></article>
+        <article class="guide"><h3>Huy động sợi cơ</h3><p>Khi các lần lặp trở nên khó hơn, cơ thể huy động thêm đơn vị vận động để duy trì lực. Các lần cuối sạch thường có giá trị cao.</p></article>
+        <article class="guide"><h3>Progressive overload</h3><p>Ghi log giúp bạn tăng số lần hoặc mức tạ có kiểm soát. Chính tiến bộ theo thời gian khiến cơ thể tiếp tục thích nghi.</p></article>
+        <article class="guide"><h3>Tiết kiệm thời gian</h3><p>Ít hiệp làm việc giúp buổi tập nằm trong 35–45 phút, phù hợp lịch tập 5:30 sáng và dễ duy trì đều đặn.</p></article>
+        <article class="guide"><h3>Ít hiệp dư thừa</h3><p>Mỗi hiệp có mục tiêu cụ thể; không tích lũy nhiều hiệp quá nhẹ chỉ để tạo cảm giác đã tập nhiều.</p></article>
+        <article class="guide"><h3>Giới hạn cần nhớ</h3><p>HIT không tự động tốt hơn nhiều hiệp. Tập đến thất bại tuyệt đối không bắt buộc và có thể làm hồi phục khó hơn.</p></article>
+      </div>
+      <div class="grid-2" style="margin-top:16px">
+        <article class="card"><h3>Điểm mạnh với bạn</h3><ul class="rules" style="margin-top:10px"><li>Buổi tập ngắn, ít lãng phí thời gian.</li><li>Dễ theo dõi tải, số lần và tiến bộ.</li><li>Máy cho phép tiến gần giới hạn khá an toàn.</li><li>Volume thấp phù hợp giai đoạn giảm cân và quay lại tập.</li></ul></article>
+        <article class="card"><h3>Điểm phải kiểm soát</h3><ul class="rules" style="margin-top:10px"><li>Người mới dễ ước tính sai RIR.</li><li>Kỹ thuật dễ vỡ ở cuối hiệp.</li><li>Năm buổi đều thất bại sẽ quá tải hồi phục.</li><li>Nếu bị chững lâu, có thể cần tăng volume chứ không chỉ cố nặng hơn.</li></ul></article>
+      </div>
+    </section>
+
+    <section id="lich-tuan">
+      <h2>Lịch tuần</h2>
+      <div class="week">
+        <article class="day active"><span class="num">Thứ 2</span><strong>Push</strong><p>Ngực · vai · tay sau<br>6–7 hiệp làm việc</p></article>
+        <article class="day active"><span class="num">Thứ 3</span><strong>Pull</strong><p>Lưng · vai sau · tay trước<br>7–8 hiệp</p></article>
+        <article class="day active"><span class="num">Thứ 4</span><strong>Legs A</strong><p>Đùi trước · mông · core<br>8 hiệp</p></article>
+        <article class="day rest"><span class="num">Thứ 5</span><strong>Nghỉ</strong><p>Phục hồi hoàn toàn</p></article>
+        <article class="day active"><span class="num">Thứ 6</span><strong>Upper</strong><p>Thân trên tổng hợp<br>8 hiệp</p></article>
+        <article class="day active"><span class="num">Thứ 7</span><strong>Legs B</strong><p>Mông · đùi sau · core<br>8–9 hiệp</p></article>
+        <article class="day rest"><span class="num">Chủ nhật</span><strong>Nghỉ</strong><p>Phục hồi hoàn toàn</p></article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Khởi động trước mỗi buổi</h2>
+      <div class="card">
+        <ol class="rules">
+          <li>Xe đạp tựa lưng hoặc xe đạp thường: <strong>4–5 phút</strong>, cường độ nhẹ.</li>
+          <li>Xoay vai, khuỷu, hông và cổ chân: mỗi động tác 8–10 lần.</li>
+          <li>Bài đầu tiên: 1 hiệp rất nhẹ × 12–15, sau đó 1 hiệp khoảng 60–70% mức tập × 6–8.</li>
+          <li>Hiệp khởi động không đến thất bại và không tính vào hiệp làm việc.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="bai-tap">
+      <h2>Chi tiết các buổi tập</h2>
+
+      <article class="workout">
+        <header class="workout-head"><div><h3>Thứ 2 · Push</h3><p>Ngực, vai và tay sau</p></div><span class="badge">6–7 hiệp</span></header>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Bài tập</th><th>Ưu tiên máy</th><th>Khi thiếu máy</th><th>Hiệp × lần</th></tr></thead>
+          <tbody>
+            <tr><td>Chest Press</td><td class="machine">Chest Press Machine</td><td class="free">Dumbbell hoặc Barbell Bench Press</td><td class="sets">2 × 6–10</td></tr>
+            <tr><td>Incline Press</td><td class="machine">Incline Chest Press</td><td class="free">Incline Dumbbell/Barbell Press</td><td class="sets">1 × 8–12</td></tr>
+            <tr><td>Shoulder Press</td><td class="machine">Shoulder Press Machine</td><td class="free">Seated Dumbbell Press</td><td class="sets">1 × 8–12</td></tr>
+            <tr><td>Lateral Raise</td><td class="machine">Máy hoặc cable</td><td class="free">Dumbbell Lateral Raise</td><td class="sets">1 × 12–15</td></tr>
+            <tr><td>Triceps</td><td class="machine">Cable Pressdown</td><td class="free">Dumbbell Overhead Extension</td><td class="sets">1–2 × 10–15</td></tr>
+          </tbody>
+        </table></div>
+        <div class="cues">
+          <div class="cue"><strong>Press ngực</strong>Bả vai kéo xuống–sau, khuỷu mở 30–60°, cổ tay thẳng.</div>
+          <div class="cue"><strong>Press vai</strong>Tựa lưng, siết bụng, không ưỡn lưng để cố đẩy.</div>
+          <div class="cue"><strong>Bài cô lập</strong>Dùng tạ nhẹ, không vung người, hạ tạ 2–3 giây.</div>
+        </div>
+      </article>
+
+      <article class="workout" style="margin-top:18px">
+        <header class="workout-head"><div><h3>Thứ 3 · Pull</h3><p>Lưng, vai sau và tay trước</p></div><span class="badge">7–8 hiệp</span></header>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Bài tập</th><th>Ưu tiên máy</th><th>Khi thiếu máy</th><th>Hiệp × lần</th></tr></thead>
+          <tbody>
+            <tr><td>Lat Pulldown</td><td class="machine">Lat Pulldown</td><td class="free">Dumbbell Pullover</td><td class="sets">2 × 6–10</td></tr>
+            <tr><td>Supported Row</td><td class="machine">Chest-Supported Row</td><td class="free">Chest-Supported Dumbbell Row</td><td class="sets">2 × 8–12</td></tr>
+            <tr><td>Seated Row</td><td class="machine">Seated Cable Row</td><td class="free">One-Arm Dumbbell Row có tay chống</td><td class="sets">1 × 8–12</td></tr>
+            <tr><td>Reverse Fly</td><td class="machine">Reverse Pec Deck</td><td class="free">Dumbbell Rear-Delt Raise</td><td class="sets">1 × 12–15</td></tr>
+            <tr><td>Biceps Curl</td><td class="machine">Máy hoặc cable</td><td class="free">Dumbbell/Barbell Curl</td><td class="sets">1 × 8–12</td></tr>
+            <tr><td>Hammer Curl</td><td class="machine">Cable Rope Curl</td><td class="free">Dumbbell Hammer Curl</td><td class="sets">1 × 10–15</td></tr>
+          </tbody>
+        </table></div>
+        <div class="cues">
+          <div class="cue"><strong>Pulldown</strong>Kéo khuỷu xuống về sườn, không kéo sau gáy và không giật người.</div>
+          <div class="cue"><strong>Row</strong>Giữ lưng trung lập, dừng một nhịp khi tay cầm gần bụng.</div>
+          <div class="cue"><strong>Curl</strong>Khuỷu cố định; không ngả thân ra sau để gian lận.</div>
+        </div>
+      </article>
+
+      <article class="workout" style="margin-top:18px">
+        <header class="workout-head"><div><h3>Thứ 4 · Legs A</h3><p>Ưu tiên đùi trước, mông và core</p></div><span class="badge">8 hiệp</span></header>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Bài tập</th><th>Ưu tiên máy</th><th>Khi thiếu máy</th><th>Hiệp × lần</th></tr></thead>
+          <tbody>
+            <tr><td>Leg Press</td><td class="machine">Leg Press/Hack Squat</td><td class="free">Goblet hoặc Barbell Box Squat</td><td class="sets">2 × 8–12</td></tr>
+            <tr><td>Leg Extension</td><td class="machine">Leg Extension</td><td class="free">Heel-Elevated Goblet Squat xuống ghế</td><td class="sets">1 × 12–15</td></tr>
+            <tr><td>Leg Curl</td><td class="machine">Seated/Lying Leg Curl</td><td class="free">Dumbbell/Barbell Romanian Deadlift</td><td class="sets">2 × 8–12</td></tr>
+            <tr><td>Hip Thrust</td><td class="machine">Glute Drive/Hip Thrust</td><td class="free">Dumbbell/Barbell Hip Thrust</td><td class="sets">1 × 8–12</td></tr>
+            <tr><td>Calf Raise</td><td class="machine">Calf Raise Machine</td><td class="free">Standing Dumbbell Calf Raise</td><td class="sets">1 × 12–20</td></tr>
+            <tr><td>Core</td><td class="machine">Ab Crunch Machine/Cable</td><td class="free">Dumbbell Suitcase March</td><td class="sets">1 × 12–15</td></tr>
+          </tbody>
+        </table></div>
+        <div class="cues">
+          <div class="cue"><strong>Leg Press</strong>Toàn bàn chân trên bàn đạp; không để mông bong khỏi đệm.</div>
+          <div class="cue"><strong>RDL</strong>Đẩy hông ra sau, tạ sát chân, dừng khi đùi sau căng.</div>
+          <div class="cue"><strong>Hip Thrust</strong>Thu cằm, siết mông ở trên, không ngửa lưng.</div>
+        </div>
+      </article>
+
+      <article class="workout" style="margin-top:18px">
+        <header class="workout-head"><div><h3>Thứ 6 · Upper</h3><p>Thân trên tổng hợp</p></div><span class="badge">8 hiệp</span></header>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Bài tập</th><th>Ưu tiên máy</th><th>Khi thiếu máy</th><th>Hiệp × lần</th></tr></thead>
+          <tbody>
+            <tr><td>Incline Press</td><td class="machine">Incline Chest Press</td><td class="free">Incline Dumbbell Press</td><td class="sets">2 × 6–10</td></tr>
+            <tr><td>Neutral Pulldown</td><td class="machine">Neutral-Grip Lat Pulldown</td><td class="free">Dumbbell Pullover</td><td class="sets">2 × 8–12</td></tr>
+            <tr><td>Supported Row</td><td class="machine">Chest-Supported Row</td><td class="free">Chest-Supported Dumbbell Row</td><td class="sets">1 × 8–12</td></tr>
+            <tr><td>Lateral Raise</td><td class="machine">Máy hoặc cable</td><td class="free">Dumbbell Lateral Raise</td><td class="sets">1 × 12–15</td></tr>
+            <tr><td>Biceps Curl</td><td class="machine">Máy hoặc cable</td><td class="free">Dumbbell/Barbell Curl</td><td class="sets">1 × 8–12</td></tr>
+            <tr><td>Triceps</td><td class="machine">Cable Pressdown</td><td class="free">Close-Grip Dumbbell Press</td><td class="sets">1 × 10–15</td></tr>
+          </tbody>
+        </table></div>
+        <div class="cues">
+          <div class="cue"><strong>Mục tiêu</strong>Thêm kích thích, không cần nâng nặng hơn đầu tuần.</div>
+          <div class="cue"><strong>Kỹ thuật</strong>Giữ cùng tiêu chuẩn chuyển động của buổi Push và Pull.</div>
+          <div class="cue"><strong>Tiết kiệm giờ</strong>Có thể superset lateral raise với biceps hoặc triceps.</div>
+        </div>
+      </article>
+
+      <article class="workout" style="margin-top:18px">
+        <header class="workout-head"><div><h3>Thứ 7 · Legs B</h3><p>Ưu tiên mông, đùi sau và core</p></div><span class="badge">8–9 hiệp</span></header>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Bài tập</th><th>Ưu tiên máy</th><th>Khi thiếu máy</th><th>Hiệp × lần</th></tr></thead>
+          <tbody>
+            <tr><td>Hip Thrust</td><td class="machine">Glute Drive/Hip Thrust</td><td class="free">Dumbbell/Barbell Hip Thrust</td><td class="sets">2 × 6–10</td></tr>
+            <tr><td>Leg Press cao chân</td><td class="machine">Leg Press/Hack Squat</td><td class="free">Goblet/Barbell Box Squat</td><td class="sets">2 × 8–12</td></tr>
+            <tr><td>Leg Curl</td><td class="machine">Seated/Lying Leg Curl</td><td class="free">Dumbbell/Barbell Romanian Deadlift</td><td class="sets">2 × 8–12</td></tr>
+            <tr><td>Leg Extension</td><td class="machine">Leg Extension</td><td class="free">Goblet Squat xuống ghế</td><td class="sets">1 × 12–15</td></tr>
+            <tr><td>Calf Raise</td><td class="machine">Seated/Standing Calf Raise</td><td class="free">Standing Dumbbell Calf Raise</td><td class="sets">1 × 12–20</td></tr>
+            <tr><td>Core</td><td class="machine">Cable Pallof Press</td><td class="free">Dumbbell Suitcase March</td><td class="sets">1 × 10–15/bên</td></tr>
+          </tbody>
+        </table></div>
+        <div class="cues">
+          <div class="cue"><strong>Trọng tâm</strong>Hip thrust tập đầu tiên và có thể nặng hơn Thứ 4.</div>
+          <div class="cue"><strong>Leg press</strong>Đặt chân hơi cao nhưng vẫn giữ cả bàn chân trên bàn đạp.</div>
+          <div class="cue"><strong>Chưa cần</strong>Không tập deadlift từ sàn trong giai đoạn đầu.</div>
+        </div>
+      </article>
+    </section>
+
+    <section id="ky-thuat">
+      <h2>Thư viện kỹ thuật bài tập</h2>
+      <div class="callout"><strong>Trong mỗi dòng của lịch tập, chỉ chọn máy hoặc phương án tạ tự do—không tập cả hai.</strong> Ưu tiên máy khi muốn tiến gần technical failure; với tạ tự do hãy dừng sớm hơn một lần và dùng chốt an toàn/người hỗ trợ khi cần.</div>
+
+      <details open>
+        <summary>Ngực: Chest Press, Bench Press và Incline Press</summary>
+        <div><ul class="rules"><li>Bàn chân đặt chắc; mông và lưng trên tiếp xúc ghế.</li><li>Kéo bả vai nhẹ xuống và ra sau; cổ tay thẳng trên khuỷu.</li><li>Khuỷu mở khoảng 30–60° so với thân; hạ tay cầm/tạ về giữa ngực.</li><li>Incline chỉ cần nghiêng ghế khoảng 20–30°; hạ về vùng ngực trên.</li><li>Không nảy tạ, không để vai nhô về tai và không ưỡn lưng để cố nâng thêm.</li></ul></div>
+      </details>
+      <details>
+        <summary>Vai và tay sau: Shoulder Press, Lateral Raise, Triceps</summary>
+        <div><ul class="rules"><li>Shoulder press: tựa lưng, siết bụng, giữ xương sườn không bật lên; không khóa khuỷu mạnh.</li><li>Lateral raise: khuỷu hơi cong, nâng bằng khuỷu đến gần ngang vai, không vung người.</li><li>Pressdown: giữ khuỷu sát thân và chỉ di chuyển cẳng tay.</li><li>Overhead extension: khuỷu hướng tương đối về trước, không ưỡn lưng.</li><li>Dừng nếu vai có cảm giác kẹt hoặc đau nhói.</li></ul></div>
+      </details>
+      <details>
+        <summary>Lưng: Lat Pulldown, Pullover và các bài Row</summary>
+        <div><ul class="rules"><li>Pulldown: ngực nâng nhẹ, thân chỉ nghiêng khoảng 10°, kéo khuỷu xuống về hai bên sườn.</li><li>Không kéo sau gáy và không dùng quán tính giật người.</li><li>Pullover: khuỷu hơi cong cố định, hạ đến khi xô căng vừa; giữ xương sườn không bật lên.</li><li>Row: cột sống trung lập, vai xa tai, dừng một nhịp khi tay cầm gần bụng.</li><li>One-arm row: chống một tay lên ghế để giảm tải lưng dưới.</li></ul></div>
+      </details>
+      <details>
+        <summary>Vai sau và tay trước: Reverse Fly, Curl, Hammer Curl</summary>
+        <div><ul class="rules"><li>Reverse fly dùng tạ nhẹ, đưa tay sang hai bên và không nhún vai.</li><li>Curl giữ khuỷu gần thân; không đưa khuỷu ra trước hoặc ngả người ra sau.</li><li>Hạ tạ gần thẳng tay nhưng không khóa mạnh khuỷu.</li><li>Hammer curl giữ cổ tay trung lập; không xoay hoặc bẻ cổ tay để hoàn thành lần cuối.</li></ul></div>
+      </details>
+      <details>
+        <summary>Đùi trước: Leg Press, Box Squat và Leg Extension</summary>
+        <div><ul class="rules"><li>Leg press: cả bàn chân áp lên bàn đạp, đầu gối cùng hướng ngón chân.</li><li>Chỉ hạ đến mức mông và lưng dưới vẫn tiếp xúc đệm; không khóa gối mạnh.</li><li>Box squat: chọn ghế đủ cao, hạ mông có kiểm soát và chạm nhẹ—không thả người xuống ghế.</li><li>Bắt đầu bằng goblet squat; chỉ dùng barbell khi kỹ thuật ổn.</li><li>Leg extension: chỉnh trục máy ngang khớp gối; không đá hoặc khóa gối đột ngột.</li></ul></div>
+      </details>
+      <details>
+        <summary>Đùi sau và mông: Leg Curl, RDL và Hip Thrust</summary>
+        <div><ul class="rules"><li>RDL: gối hơi cong, đẩy hông ra sau, tạ đi sát đùi/cẳng chân và giữ lưng trung lập.</li><li>Dừng khi đùi sau căng; không cần đưa tạ xuống sàn. Đứng lên bằng cách đưa hông về trước, không ngửa lưng.</li><li>Hip thrust: mép ghế dưới bả vai, cằm hơi thu; đẩy đến khi thân và đùi gần thành đường thẳng.</li><li>Siết mông ở trên, không ưỡn lưng dưới.</li><li>Leg curl: giữ hông áp vào đệm và trả tạ có kiểm soát.</li></ul></div>
+      </details>
+      <details>
+        <summary>Bắp chân và core: Calf Raise, Suitcase March, Pallof Press</summary>
+        <div><ul class="rules"><li>Calf raise: có tay vịn, lên cao có kiểm soát và hạ gót chậm; không nảy.</li><li>Suitcase march: cầm tạ một bên, đứng thẳng, siết bụng và không nghiêng về phía tạ.</li><li>Pallof press: vai và hông hướng thẳng; đưa tay ra trước mà không để dây kéo xoay người.</li><li>Core kết thúc ngay khi không giữ được tư thế hoặc phải nín thở kéo dài.</li></ul></div>
+      </details>
+    </section>
+
+    <section>
+      <h2>Cardio ít tác động khớp</h2>
+      <div class="grid-2">
+        <article class="card">
+          <h3>Trong giới hạn 45 phút</h3>
+          <p class="muted" style="margin-top:8px">Sau tập tạ, thực hiện 5 phút xe đạp tựa lưng hoặc xe đạp thường ở RPE 4–5/10. Nếu buổi tạ đã đủ 45 phút, bỏ cardio thay vì rút ngắn hiệp chính.</p>
+        </article>
+        <article class="card">
+          <h3>Tránh trong giai đoạn đầu</h3>
+          <p class="muted" style="margin-top:8px">Không chạy, nhảy, burpee, box jump hoặc chỉnh dốc máy chạy quá cao. Mục tiêu là vận động đều mà không làm đau gối/cổ chân.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="chon-ta">
+      <h2>Cách chọn mức tạ tối ưu</h2>
+      <div class="callout">
+        <strong>Mức tạ tối ưu không phải mức nặng nhất có thể nhấc.</strong> Đó là mức cho phép đạt đúng khoảng số lần, giữ đầy đủ biên độ và kỹ thuật, rồi kết thúc khi chỉ còn 1–2 lần lặp sạch.
+      </div>
+
+      <div class="grid-2" style="margin-top:16px">
+        <article class="card">
+          <h3>Thang RIR</h3>
+          <div class="definition"><strong>RIR 3</strong><span>Còn làm được khoảng 3 lần đúng kỹ thuật.</span></div>
+          <div class="definition"><strong>RIR 2</strong><span>Còn chắc chắn 2 lần sạch.</span></div>
+          <div class="definition"><strong>RIR 1</strong><span>Còn chắc chắn 1 lần; không chắc lần thứ hai.</span></div>
+          <div class="definition"><strong>RIR 0</strong><span>Không thể hoàn thành thêm một lần với đủ biên độ và đúng kỹ thuật.</span></div>
+        </article>
+        <article class="card">
+          <h3>Đích theo loại bài</h3>
+          <div class="table-wrap"><table class="mini-table">
+            <tbody>
+              <tr><td>Máy compound</td><td>8–12 lần · RIR 1–2</td></tr>
+              <tr><td>Press tạ tự do</td><td>8–12 lần · RIR 1–2</td></tr>
+              <tr><td>RDL / box squat</td><td>8–12 lần · RIR 2</td></tr>
+              <tr><td>Bài cô lập</td><td>10–15 lần · RIR 1</td></tr>
+              <tr><td>Bắp chân</td><td>12–20 lần · RIR 1–2</td></tr>
+              <tr><td>Core</td><td>Dừng trước khi mất tư thế</td></tr>
+            </tbody>
+          </table></div>
+        </article>
+      </div>
+
+      <h3 style="margin-top:22px">Quy trình thử tạ trong buổi đầu</h3>
+      <div class="progression" style="margin-top:12px">
+        <article class="step"><strong>Khởi động</strong><span class="muted">Mức rất nhẹ × 10; khoảng 60–70% mức dự kiến × 5. Không hiệp nào gần thất bại.</span></article>
+        <article class="step"><strong>Thử hiệp làm việc</strong><span class="muted">Thực hiện trong khoảng lần quy định và dừng ở RIR 1–2.</span></article>
+        <article class="step"><strong>Đánh giá</strong><span class="muted">Dựa vào số lần và chất lượng kỹ thuật để giảm, giữ hoặc tăng mức tạ.</span></article>
+      </div>
+      <div class="table-wrap card" style="margin-top:14px; padding:0"><table>
+        <thead><tr><th>Kết quả hiệp thử 8–12 lần</th><th>Đánh giá</th><th>Xử lý</th></tr></thead>
+        <tbody>
+          <tr><td>Chưa được 8 lần đã mất kỹ thuật</td><td>Quá nặng</td><td>Giảm 5–10%</td></tr>
+          <tr><td>Được 8–12 lần, còn 1–2 lần sạch</td><td><strong>Tối ưu</strong></td><td>Giữ nguyên</td></tr>
+          <tr><td>Trên 12 lần, vẫn còn 2–3 lần</td><td>Quá nhẹ</td><td>Tăng 2,5–5%</td></tr>
+          <tr><td>Đau khớp hoặc phải rút biên độ</td><td>Không phù hợp</td><td>Giảm tạ hoặc đổi bài</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2 style="margin-top:28px">Cách tăng tạ</h2>
+      <div class="progression">
+        <article class="step"><strong>Chọn mức khởi đầu</strong><span class="muted">Đạt đầu dưới khoảng lần với kỹ thuật chuẩn và còn dư 1–2 lần.</span></article>
+        <article class="step"><strong>Đạt đầu trên</strong><span class="muted">Khi đạt đầu trên trong hai buổi liên tiếp, mới tăng mức tạ.</span></article>
+        <article class="step"><strong>Tăng nhỏ</strong><span class="muted">Thân trên 2–5%; thân dưới 5–10%. Nếu sai kỹ thuật, giảm 10–15%.</span></article>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <strong>Ví dụ Chest Press 2 × 6–10:</strong>
+        <p class="muted small" style="margin-top:6px">Buổi 1: 50 kg × 9 và × 7 → giữ tạ. Buổi sau: × 10 và × 9 → vẫn giữ. Khi đạt 10 và 10 với kỹ thuật chuẩn → tăng mức nhỏ nhất.</p>
+      </div>
+      <div class="decision" style="margin-top:14px"><strong>Quy tắc:</strong> thân trên tăng khoảng 2–5%; thân dưới 5–10%. Nếu không đạt đầu dưới hoặc kỹ thuật biến dạng, giảm 10–15%. Không thử 1RM trong 6 tuần đầu.</div>
+    </section>
+
+    <section>
+      <h2>Hồi phục và kiểm soát cường độ</h2>
+      <div class="grid-2">
+        <article class="card">
+          <h3>Technical failure là gì?</h3>
+          <p class="muted" style="margin-top:8px">Dừng khi lần tiếp theo chắc chắn khiến bạn mất tư thế, rút ngắn biên độ hoặc phải giật người. Không cần cố đến lúc tạ hoàn toàn không di chuyển.</p>
+        </article>
+        <article class="card">
+          <h3>Khi nào phải giảm volume?</h3>
+          <p class="muted" style="margin-top:8px">Mức tạ giảm hai buổi liên tiếp, đau cơ quá 72 giờ, mệt ảnh hưởng công việc, đau khớp hoặc mất ngủ rõ hơn.</p>
+        </article>
+      </div>
+      <div class="callout" style="margin-top:16px">
+        <strong>Lưu ý về giấc ngủ:</strong> nếu vẫn ngủ khoảng 5 giờ/đêm, hãy giữ 1 hiệp làm việc mỗi bài lâu hơn và không tập tới technical failure ở quá 1–2 bài máy trong một buổi.
+      </div>
+    </section>
+
+    <section id="theo-doi">
+      <h2>Theo dõi và điều chỉnh</h2>
+      <div class="grid-2">
+        <article class="card">
+          <h3>Cân nặng</h3>
+          <ul class="rules" style="margin-top:10px">
+            <li>Cân buổi sáng sau khi đi vệ sinh, trước ăn.</li>
+            <li>Dùng <strong>trung bình 7 ngày</strong>, không kết luận từ một ngày đơn lẻ.</li>
+            <li>Không cộng lại toàn bộ “calo tập luyện” do đồng hồ báo.</li>
+            <li>Creatine có thể giữ 3–5 g mỗi ngày; whey chỉ dùng để đủ đạm.</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Sau hai tuần</h3>
+          <div class="definition"><strong>−0,4 đến −1 kg/tuần</strong><span>Tập vẫn khỏe: giữ nguyên.</span></div>
+          <div class="definition"><strong>Dưới −0,3 kg/tuần</strong><span>Bớt 100–150 kcal/ngày.</span></div>
+          <div class="definition"><strong>Trên −1,2 kg/tuần</strong><span>Nếu chóng mặt/tụt sức: thêm 150–200 kcal, ưu tiên cơm hoặc khoai quanh buổi tập.</span></div>
+        </article>
+      </div>
+
+      <h3 style="margin-top:24px">Mẫu log cho từng bài</h3>
+      <div class="table-wrap card" style="margin-top:10px; padding:0"><table class="log-table">
+        <thead><tr><th>Ngày</th><th>Bài</th><th>Mức tạ</th><th>Hiệp 1</th><th>Hiệp 2</th><th>RIR</th><th>Ghi chú kỹ thuật/đau</th></tr></thead>
+        <tbody>
+          <tr><td>____</td><td>____________</td><td>____ kg</td><td>____ reps</td><td>____ reps</td><td>____</td><td>________________</td></tr>
+          <tr><td>____</td><td>____________</td><td>____ kg</td><td>____ reps</td><td>____ reps</td><td>____</td><td>________________</td></tr>
+          <tr><td>____</td><td>____________</td><td>____ kg</td><td>____ reps</td><td>____ reps</td><td>____</td><td>________________</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="decision" style="margin-top:14px"><strong>Giảm volume trong tuần đó</strong> nếu có ít nhất hai dấu hiệu: mức tạ giảm hai buổi liên tiếp, đau cơ quá 72 giờ, nhịp tim nghỉ tăng rõ, mất ngủ hơn, đau khớp hoặc mệt ảnh hưởng công việc. Khi đó giữ mỗi bài 1 hiệp và bỏ cardio cuối buổi.</div>
+    </section>
+
+    <section id="an-toan">
+      <h2>An toàn</h2>
+      <div class="callout danger">
+        <strong>Dừng tập và kiểm tra y tế</strong> nếu xuất hiện đau/tức ngực, khó thở bất thường, chóng mặt, ngất, tim đập loạn hoặc đau/co rút bắp chân khi đi bộ ngắn. Đau cơ do vận động có thể bình thường; đau nhói trong khớp, tê lan hoặc đau làm thay đổi dáng đi thì không bình thường.
+      </div>
+      <div class="callout danger" style="margin-top:12px">
+        <strong>Đói kèm run tay, vã mồ hôi, tim đập nhanh, chóng mặt, lú lẫn hoặc yếu bất thường</strong> không nên được xem là “đốt mỡ tốt”. Hãy ăn ngay và kiểm tra đường huyết nếu có máy, đặc biệt nếu đang mắc tiểu đường hoặc dùng thuốc hạ đường huyết.
+      </div>
+      <div class="callout" style="margin-top:12px">
+        <strong>Với BMI khoảng 40,6:</strong> nên khám tổng quát trước khi tăng cường độ lâu dài, nhất là khi có tăng huyết áp, tiểu đường, bệnh thận, gout, gan nhiễm mỡ, ngáy to hoặc buồn ngủ ban ngày.
+      </div>
+      <p class="sources" style="margin-top:20px">
+        Tham khảo: <a href="https://acsm.org/resistance-training-guidelines-update-2026/" target="_blank" rel="noopener">ACSM 2026 Resistance Training Guidelines</a> ·
+        <a href="https://www.cdc.gov/physical-activity-basics/guidelines/adults.html" target="_blank" rel="noopener">CDC Physical Activity Guidelines</a> ·
+        <a href="https://www.cdc.gov/healthy-weight-growth/healthy-eating/meals-snacks.html" target="_blank" rel="noopener">CDC Healthy Meals & Snacks</a> ·
+        <a href="https://diabetes.org/living-with-diabetes/hypoglycemia-low-blood-glucose/symptoms-treatment" target="_blank" rel="noopener">ADA – Dấu hiệu hạ đường huyết</a> ·
+        <a href="https://www.exerciseismedicine.org/wp-content/uploads/2021/04/EIM-exercise-preparticipation-screening.pdf" target="_blank" rel="noopener">Exercise is Medicine – Preparticipation Screening</a>
+      </p>
+    </section>
+
+    <footer>Kế hoạch ăn và tập HIT 45 phút · Bản cá nhân hóa · Cập nhật tháng 8/2026</footer>
+  </main>
+</body>
+</html>
